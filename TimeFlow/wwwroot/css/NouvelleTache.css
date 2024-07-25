@@ -1,0 +1,94 @@
+﻿
+/* Style pour le titre "Nouvelle Tâche" */
+
+
+/* Adiciona estilos específicos para a página de criação de tarefa */
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f2f2f2;
+    color: #333;
+    height: 100vh;
+}
+
+.containerNT {
+    background-color: whitesmoke;
+    padding: 30px;
+    border: 1px solid #ddd;
+    max-width: 600px;
+    width: 100%;
+    margin: auto; /* Adiciona esta propriedade para centralizar horizontalmente */
+    margin-top: 20px; /* Adiciona espaçamento no topo para centralizar verticalmente */
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+form label {
+    text-align: left;
+}
+
+select,
+input[type="date"],
+input[type="time"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+    border-radius: 5px;
+    background-color: #258cfb; /* Cor azul nos botões */
+    color: white; /* Texto branco para contrastar */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    input[type="submit"]:hover,
+    input[type="button"]:hover,
+    input[type="reset"]:hover {
+        background-color: #1c6ec3; /* Tom mais escuro ao passar o mouse */
+    }
+
+    input[type="submit"]:focus,
+    input[type="button"]:focus,
+    input[type="reset"]:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(242, 242, 242, 0.5);
+    }
+
+/* Restante dos estilos, conforme necessário */
+
+/* Adicione estilos específicos para o link "Back to List" */
+a {
+    text-decoration: none;
+    color: #258cfb;
+    font-weight: bold;
+}
+
+    a:hover {
+        color: #1877d9;
+    }
+
+
+

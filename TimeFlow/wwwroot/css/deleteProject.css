@@ -1,0 +1,73 @@
+﻿/* Adicione este bloco CSS ao seu arquivo de estilos para a página de exclusão */
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f2f2f2;
+    color: #333;
+    height: 100vh;
+}
+
+.containerNT {
+    background-color: whitesmoke;
+    padding: 30px;
+    border: 1px solid #ddd;
+    max-width: 600px;
+    width: 100%;
+    margin: auto;
+    margin-top: 20px;
+}
+
+h1, h3, h4 {
+    color: #333;
+    text-align: center;
+}
+
+dl.row {
+    margin-bottom: 20px;
+}
+
+    dl.row dt, dl.row dd {
+        padding: 10px;
+    }
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+    border-radius: 5px;
+    background-color: #d9534f; /* Cor vermelha para botão de exclusão */
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    input[type="submit"]:hover,
+    input[type="button"]:hover,
+    input[type="reset"]:hover {
+        background-color: #c9302c; /* Tom mais escuro ao passar o mouse */
+    }
+
+    input[type="submit"]:focus,
+    input[type="button"]:focus,
+    input[type="reset"]:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(242, 242, 242, 0.5);
+    }
+
+a {
+    text-decoration: none;
+    color: #258cfb;
+    font-weight: bold;
+}
+
+    a:hover {
+        color: #1877d9;
+    }

@@ -1,0 +1,33 @@
+﻿body {
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container-home {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.display-4 {
+    color: #007bff;
+}
+
+p {
+    font-size: 18px;
+    color: #333;
+}
+
+a {
+    color: #007bff; /* Noir */
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }

@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Page d'accueil";
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/css/StyleHome.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+
+    <div class="container-home">
+        <div class="text-center">
+            <h1>Bienvenue sur</h1>
+            <h1 class="display-4">Feuille de Temps</h1>
+        </div>
+    </div>
+
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="text-center">
+            <p>Connectez-vous dès maintenant pour commencer à utiliser notre service de feuille de temps.</p>
+            <!-- Ajoutez ici vos liens vers les pages de connexion ou d'inscription -->
+            <p><a href="/Identity/Account/Register">S'inscrire</a> | <a href="/Identity/Account/Login">Se connecter</a></p>
+        </div>
+    }
+
+</body>
+</html>
+
+
+
+
+
+
+

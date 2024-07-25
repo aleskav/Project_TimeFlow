@@ -1,0 +1,111 @@
+﻿@page
+@model TimeFlow.Pages.GestionTaches.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+<link rel="stylesheet" href="/css/indexTache.css">
+
+
+
+<div class="feuille-de-temps">
+    <div class="header">
+
+
+
+        <div class="navigation">
+
+            <div class="search-form">
+                <form method="get">
+
+                    <label asp-for="Search.Titre" class="label-white">Titre :</label>
+                    <input asp-for="Search.Titre" />
+
+                    <label for="employee" class="label-white"></label>
+                    <select asp-for="Search.MembreChargeId" asp-items="@Model.Members" id="Employee">
+                        <option value="">Employé :</option>
+                    </select>
+
+                    <label for="project" class="label-white"></label>
+                    <select asp-for="Search.ProjetId" asp-items="@Model.Projets" id="project">
+                        <option value="">Projet :</option>
+                    </select>
+
+                    <label for="start_date" class="label-white">De :</label>
+                    <input asp-for="Search.From" type="date" id="start_date">
+
+                    <label for="end_date" class="label-white">À :</label>
+                    <input asp-for="Search.To" type="date" id="end_date">
+
+                    <button type="submit" class="action-button">
+                        <i class="fa fa-search"></i>
+                        Filtrer
+                    </button>
+                </form>
+            </div>
+            <a asp-page="Create" class="action-button">Créer tâche</a>
+        </div>
+
+
+    </div>
+
+    <h2>Liste des tâches trouvés :</h2>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Taches[0].Titre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Taches[0].Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Taches[0].DateCreer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Taches[0].MembresCharge)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Taches[0].Projet)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Taches)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateCreer)
+                    </td>
+                    <td>
+                        @foreach (var member in item.MembresCharge)
+                        {
+                            <div>@member.NomFamille @member.Prenom </div>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Projet.Titre)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Gérer la tâche</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Détails</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Supprimer</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,273 @@
+﻿/* styles.css */
+
+body {
+    background-color: #f2f2f2;
+    color: #333;
+    /*background-color: #e0e0e0;*/ /* Couleur de fond argentée très claire */
+}
+
+
+
+.day-header {
+    margin: 0 10px; /* 5 pixels d'espace à gauche et à droite de chaque cellule de jour */
+}
+
+/* Styles pour la barre de navigation */
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3498db; /*Couleur de fond douce*/
+    padding: 40px; /*Réduire l'espacement interne pour le rendre plus moderne*/
+    border: 1px solid #2980b9; /*Couleur de la bordure correspondant au survol des boutons*/
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.ajouter-table {
+    padding-bottom: 20px;
+}
+
+
+.navigation a {
+    text-decoration: none;
+}
+
+
+
+
+/* Style de base des boutons */
+.action-button, .view-mode, .report-button, .date-range, .arrow-button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+    border-radius: 5px;
+}
+/* Style par défaut (quand il n'est pas en focus ou en survol) */
+.action-button, .view-mode, .report-button, .date-range, .arrow-button {
+    background-color: #f2f2f2; /*Gris clair*/
+    color: #333; /*Couleur de texte par défaut*/
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    /* Style au survol de la souris (hover) */
+    .action-button:hover, .view-mode:hover, .report-button:hover, .date-range:hover, .arrow-button:hover {
+        background-color: #e0e0e0; /*Gris clair au survol de la souris*/
+    }
+
+    /* Style lors du clic sur le bouton (focus) */
+    .action-button:focus, .view-mode:focus, .report-button:focus, .date-range:focus, .arrow-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(242, 242, 242, 0.5); /*Ajout d'une bordure de focus plus claire*/
+    }
+
+
+td{
+    padding: 0;
+    margin: 0;
+}
+
+
+.day-cell {
+    flex: 1; /* La largeur de toutes les cellules des jours sera égale, remplissant l'espace disponible */
+    width: 160px; /* Largeur des cellules des jours */
+ text-align: center; /* Centrer le contenu dans la cellule */
+}
+
+/* Estilo das células em branco */
+.blank-cell {
+    width: 40px; /* Largura das células em branco */
+    background-color: white; /* Cor de fundo das células em branco */
+}
+
+
+.filled {
+    background-color: #258cfb;
+    color: white;
+/*     height: 100%;
+*/    width: 160px;
+    padding: 14px;
+}
+.timeSheetRow{
+    padding:0;
+    margin:0;
+    height: 12px;
+}
+/*popups in the timesheet */
+/* Popup container */
+.popup {
+    position: relative;
+    cursor: pointer;
+}
+
+    /* The actual popup (appears on top) */
+.popup .popuptext {
+    visibility: hidden;
+    background-color: #333541;
+    color: #fff;
+    text-align: left;
+    border-radius: 4px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.popup-right {
+    visibility: hidden;
+    background-color: #333541;
+    color: #fff;
+    text-align: left;
+    border-radius: 4px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 125%;
+    transform: translateY(-50%);
+}
+    /* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #c3c3c3 transparent transparent transparent;
+}
+
+.popup-right::after {
+    content: "";
+    position: absolute;
+    top: 25%;
+    left: -5px;
+    transform: translate(-100%, -50%);
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333541 transparent transparent transparent;
+    transform: rotate(-90deg);
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup:hover .popuptext,
+.popup:hover .popup-right{
+    visibility: visible;
+    -webkit-animation: fadeIn 0.2s;
+    animation: fadeIn 0.2s
+}
+
+/*Adicionado:
+*/
+
+
+
+/* Destacando o botão + */
+/* Cor prateada para .ajouter-table */
+/* Cor mais clara normalmente */
+.ajouter-table a {
+    display: block;
+    background-color: #e0e0e0; /* Silver mais claro */
+    color: black;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 5px;
+}
+
+    /* Cor mais escura ao passar o mouse */
+    .ajouter-table a:hover {
+        background-color: #c0c0c0; /* Silver mais escuro ao passar o mouse */
+    }
+
+    /* Cor azul para o texto '+' ao passar o mouse */
+    .ajouter-table a:hover {
+        color: blue; /* Azul ao passar o mouse */
+    }
+
+
+
+/* Styles du Calendrier */
+.calendar-container {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+tabs-container {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.tab {
+    cursor: pointer;
+}
+
+/* Styles de la Boîte de Recherche */
+.search-box {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/*Ajoute les lignes
+*/
+/* Styles du Tableau de l'Agenda */
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+    .calendar-table th, .calendar-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+
+/*.graded{
+    border-bottom: 1px dashed #f1f1f1;
+}*/
+
+/*.start-hours{
+    border-bottom: 1px dashed black;
+}*/
+
+
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

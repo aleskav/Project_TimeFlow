@@ -1,0 +1,85 @@
+﻿@page
+@model TimeFlow.Pages.FeuilleDeTemps.AddTaskModel
+
+@{
+    ViewData["Title"] = "AddTask";
+}
+
+<link rel="stylesheet" href="~/css/addTask.css" />
+
+
+<div class="containerNT">
+
+    <h4>Ajouter tâche</h4>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <span asp-validation-for="JourTache.HeureFin" class="text-danger"> </span>
+                <span asp-validation-for="JourTache.HeureDebut" class="text-danger"></span>
+                <div class="form-group">
+                    <label asp-for="JourTache.TacheId" class="control-label">Tâche</label>
+                    <select asp-for="JourTache.TacheId" asp-items="@Model.Tasks"></select>
+                    <span asp-validation-for="JourTache.TacheId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="JourTache.FeuilleJourId" class="control-label">Jour de la semaine</label>
+                    <select asp-for="JourTache.FeuilleJourId" asp-items="@Model.Days"></select>
+                    <span asp-validation-for="JourTache.FeuilleJourId" class="text-danger"></span>
+                </div>
+                <!-- Sélection de l'heure de début -->
+
+                <label for="debut">Début:</label>
+                <input asp-for="JourTache.HeureDebut" type="time" id="debut">
+
+                <!-- Sélection de l'heure de fin -->
+
+                <label for="fin">Fin:</label>
+                <input asp-for="JourTache.HeureFin" type="time" id="fin">
+
+                <!-- Bouton pour soumettre le formulaire -->
+                <input type="submit" value="Enregistrer">
+
+                <!-- Bouton pour annuler -->
+                <input type="button" value="Annuler">
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="Index">Retour</a>
+    </div>
+
+</div>
+
+@section scripts {
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var debut = document.getElementById('debut');
+            var fin = document.getElementById('fin');
+
+            debut.addEventListener('change', function (e) {
+                debut.value = adjustTime(debut.value);
+            });
+
+            fin.addEventListener('change', function (e) {
+                fin.value = adjustTime(fin.value);
+            });
+
+            function adjustTime(time) {
+                let vals = time.split(":");
+                let quarter = Math.round(parseInt(vals[1]) / 15);
+                if(quarter == 4) {
+                    quarter = 3;
+                }
+                vals[1] = ((quarter == 0) ? "0" : "") + (quarter * 15);
+                return vals.join(":");
+            }
+        });
+    </script>
+}
+
+

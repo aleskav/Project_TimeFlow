@@ -1,0 +1,68 @@
+﻿@page
+@model TimeFlow.Pages.FeuilleDeTemps.EditTaskModel
+
+<link rel="stylesheet" href="~/css/addTask.css" />
+
+
+<div class="containerNT">
+
+
+    <h4>Éditer tâche</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="JourTache.TacheId" />
+                <input type="hidden" asp-for="JourTache.FeuilleJourId" />
+                <div class="form-group">
+                    <label asp-for="JourTache.HeureDebut" class="control-label"></label>
+                    <input asp-for="JourTache.HeureDebut" class="form-control" type="time" id="debut" />
+                    <span asp-validation-for="JourTache.HeureDebut" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="JourTache.HeureFin" class="control-label"></label>
+                    <input asp-for="JourTache.HeureFin" class="form-control" type="time" id="fin" />
+                    <span asp-validation-for="JourTache.HeureFin" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="./Index">Back to List</a>
+    </div>
+
+</div>
+
+
+@section scripts {
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var debut = document.getElementById('debut');
+            var fin = document.getElementById('fin');
+
+            debut.addEventListener('change', function (e) {
+                debut.value = adjustTime(debut.value);
+            });
+
+            fin.addEventListener('change', function (e) {
+                fin.value = adjustTime(fin.value);
+            });
+
+            function adjustTime(time) {
+                let vals = time.split(":");
+                let quarter = Math.round(parseInt(vals[1]) / 15);
+                if (quarter == 4) {
+                    quarter = 3;
+                }
+                vals[1] = ((quarter == 0) ? "0" : "") + (quarter * 15);
+                return vals.join(":");
+            }
+        });
+    </script>
+}

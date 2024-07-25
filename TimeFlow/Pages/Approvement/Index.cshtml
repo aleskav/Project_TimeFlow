@@ -1,0 +1,115 @@
+﻿@page
+@using TimeFlow.utils
+@model TimeFlow.Pages.Approvement.IndexModel
+
+<style>
+    .search-form {
+        margin-bottom: 20px;
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 35px;
+    }
+
+    .search-form .seach-group {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+</style>
+
+<br />
+<br />
+
+
+<form method="get">
+    <div class="search-form">
+        <div class="seach-group">
+            <label for="employee">Employé :</label>
+            <select asp-for="Filter.EmployeId" asp-items="@Model.Members" id="Employee">
+                <option value="">All</option>
+            </select>
+        </div>
+
+        <div class="seach-group">
+            <label for="project">Est confirmee? :</label>
+            <input asp-for="Filter.Approved" />
+        </div>
+
+        <div class="seach-group">
+            <label for="start_date">De :</label>
+            <input asp-for="Filter.From" type="date" id="start_date"/>
+        </div>
+
+        <div class="seach-group">
+            <label for="end_date">À :</label>
+            <input asp-for="Filter.To" type="date" id="end_date">
+        </div>
+
+        <button type="submit" class="search-button">
+            <i class="fa fa-search"></i>
+            Filtrer
+        </button>
+    </div>
+</form>
+
+<br/>
+<br/>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FeuilleTemps[0].Annee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FeuilleTemps[0].Semaine)
+            </th>
+            <th>
+                Commance le:
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FeuilleTemps[0].Employe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FeuilleTemps[0].EstSoumis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FeuilleTemps[0].EstConfirme)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.FeuilleTemps) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Annee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Semaine)    
+            </td>
+            <td>
+                @WeekHelper.getMonday(item.Annee, item.Semaine).ToString("dd MMMM yyyy")
+            <td>
+                @Html.DisplayFor(modelItem => item.Employe.NomFamille)
+                <span> </span>
+                @Html.DisplayFor(modelItem => item.Employe.Prenom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstSoumis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstConfirme)
+            </td>
+            <td>
+                <a asp-page="./Review" asp-route-id="@item.Id">Revoir</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

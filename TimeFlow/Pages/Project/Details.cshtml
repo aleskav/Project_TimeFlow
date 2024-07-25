@@ -1,0 +1,67 @@
+﻿@page
+@model TimeFlow.Pages.Project.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<link rel="stylesheet" href="/css/createProject.css">
+
+<div class="containerNT">
+
+    <h1>Details</h1>
+
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Projet.Titre)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Projet.Titre)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Projet.DateCreer)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Projet.DateCreer)
+            </dd>
+        </dl>
+    </div>
+
+
+    <h5>Liste des tâches :</h5>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Projet.Taches[0].Titre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Projet.Taches[0].DateCreer)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Projet.Taches)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titre)
+                    </td>
+                    <td>
+                        @item.DateCreer.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        <a asp-page="/GestionTaches/Edit" asp-route-id="@item.Id">Gérer la tâche</a> |
+                        <a asp-page="/GestionTaches/Details" asp-route-id="@item.Id">Détails</a> |
+                        <a asp-page="/GestionTaches/Delete" asp-route-id="@item.Id">Supprimer</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

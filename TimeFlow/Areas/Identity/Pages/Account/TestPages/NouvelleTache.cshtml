@@ -1,0 +1,66 @@
+﻿@page
+@model TimeFlow.Areas.Identity.Pages.Account.TestPages.NouvelleTacheModel
+@{
+    ViewData["Title"] = "Nouvelle Tâche";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de Tâches</title>
+    <link rel="stylesheet" href="/css/NouvelleTache.css">
+</head>
+<body>
+    <div class="containerNT">
+
+    <h1>Nouvelle Tâche</h1>
+
+    <!-- Formulaire pour créer une nouvelle tâche -->
+    <form>
+
+        <!-- Sélection du projet -->
+        <label for="projet">Projet:</label>
+        <select id="projet" name="projet">
+            <option value="projet1">Projet 1</option>
+            <option value="projet2">Projet 2</option>
+            <!-- Ajoutez plus d'options pour d'autres projets -->
+        </select>
+            <br>       
+            <!-- Sélection de l'activité -->
+        <label for="activite">Activité:</label>
+        <select id="activite" name="activite">
+            <option value="activite1">Activité 1</option>
+            <option value="activite2">Activité 2</option>
+            <!-- Ajoutez plus d'options pour d'autres activités -->
+        </select><br><br>
+
+        <!-- Sélection de la date -->
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date"><br><br>
+
+        <!-- Sélection de l'heure de début -->
+        <label for="debut">Début:</label>
+        <input type="time" id="debut" name="debut">
+
+        <!-- Sélection de l'heure de fin -->
+        <label for="fin">Fin:</label>
+        <input type="time" id="fin" name="fin"><br><br>
+
+        <!-- Champ de saisie pour la description -->
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+
+        <!-- Bouton pour soumettre le formulaire -->
+        <input type="submit" value="Enregistrer">
+
+        <!-- Bouton pour annuler -->
+        <input type="button" value="Annuler">
+    </form>
+    </div>
+
+</body>
+</html>
+
+<!--https://localhost:7175/Identity/Account/TestPages/NouvelleTache-->

@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var user = await UserManager.GetUserAsync(User);
+        var userRoles = await UserManager.GetRolesAsync(user);
+
+        if (userRoles.Contains("Employe")) // If the user is an employee, display the employee navbar
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/FeuilleDeTemps/Index" title="Timesheet">Gérer Feuille de Temps</a>
+            </li>
+
+        }
+        else if (userRoles.Contains("Superviseur")) // If the user is a manager, display the manager navbar
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/GestionTaches/Index" title="Manage Tasks">Gérer Tâches</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/Project/Index" title="Manage Projects">Gérer Projets</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/Approvement/Index">List des feuilles de temps</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/Rapport/Index" title="Rapport">Rapport</a>
+            </li>
+        }
+        else if (userRoles.Contains("Admin")) // If the user is an admin, display the admin navbar
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/Employes/Index">Employés</a>
+            </li>
+        }
+    }
+</ul>

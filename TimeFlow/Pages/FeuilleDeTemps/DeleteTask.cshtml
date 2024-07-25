@@ -1,0 +1,49 @@
+﻿@page
+@model TimeFlow.Pages.FeuilleDeTemps.DeleteTaskModel
+
+<link rel="stylesheet" href="~/css/addTask.css" />
+
+
+<div class="containerNT">
+
+
+    <h4>Êtes-vous sûr de vouloir supprimer ceci ?</h4>
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.JourTache.Tache)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.JourTache.Tache.Id)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.JourTache.FeuilleJour)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.JourTache.FeuilleJour.Id)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.JourTache.HeureDebut)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.JourTache.HeureDebut)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.JourTache.HeureFin)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.JourTache.HeureFin)
+            </dd>
+        </dl>
+
+        <form method="post">
+            <input type="hidden" asp-for="JourTache.TacheId" />
+            <input type="hidden" asp-for="JourTache.FeuilleJourId" />
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a asp-page="./Index">Retour</a>
+        </form>
+    </div>
+
+</div>
+

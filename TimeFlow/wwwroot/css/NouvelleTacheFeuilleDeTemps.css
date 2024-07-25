@@ -1,0 +1,79 @@
+﻿/* Ajoutez ces styles dans votre fichier Details.css */
+
+.containerWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+}
+
+fieldset {
+    border: 2px solid dodgerblue;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.containerNT {
+    max-width: 900px;
+    margin: 100px auto;
+    padding: 120px;
+    border: 2px solid dodgerblue;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+legend {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    color: black;
+}
+
+.row {
+    margin-bottom: 10px;
+    margin-top: -40px;
+}
+
+.label {
+    font-weight: bold;
+    margin-top: 20px;
+    color: black;
+    font-family: sans-serif;
+}
+
+.col-sm-10 {
+    margin-top: 5px;
+    margin-left: 3px;
+}
+
+.actions {
+    margin-top: 70px;
+}
+
+.action-link {
+    text-decoration: none;
+    font-family: sans-serif;
+    padding-inline: 10px;
+}
+
+.form-group {
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* Style commun pour les boutons */
+input[type="submit"],
+input[type="button"] {
+    margin-top: 40px;
+    margin: 10px; /* Marge autour des boutons */
+    background-color: dodgerblue;
+    color: white;
+    font-weight: bold;
+}

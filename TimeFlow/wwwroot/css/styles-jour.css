@@ -1,0 +1,55 @@
+﻿/* styles-jour.css */
+
+/* Style de la div la plus externe (bord externe) */
+.feuille-de-temps {
+    width: 100%; /* Faites en sorte que la largeur de la bordure externe occupe toute l'écran */
+    display: flex;
+    flex-direction: column; /* Ajustez le contenu pour s'empiler verticalement */
+    align-items: center; /* Centrez le contenu verticalement */
+    border: 1px solid #ccc; /* Ajoutez une bordure à la bordure externe */
+    padding: 20px; /* Ajoutez un peu de remplissage interne pour éloigner le contenu de la bordure */
+    box-sizing: border-box; /* Incluez la bordure dans la largeur totale de la div */
+}
+
+/* Style de la div contenant la date */
+.date-selection {
+    width: 100%; /* Faites en sorte que la largeur de la div "date selection" occupe toute l'écran */
+    border: 1px solid #ccc; /* Ajoutez une bordure à la div de date */
+    padding: 20px; /* Espacement interne de la div de date */
+    background-color: #f0f0f0; /* Couleur de fond de la div de date */
+    text-align: center; /* Centrez le texte dans la div de date */
+}
+
+/* Style de l'en-tête avec les informations de la semaine */
+.header {
+    width: 100%; /* Faites en sorte que la largeur de l'en-tête occupe toute l'écran */
+}
+
+/* Supprimez la bordure droite des horaires */
+.hour-cell {
+    position: relative;
+    border-right: none; /* Supprimez la bordure droite des horaires */
+}
+
+/* Ajoutez une division immédiatement à droite des horaires */
+.hour-container::after {
+    content: '';
+    width: 1px;
+    height: 100%;
+    background-color: #ccc;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/* Ajoutez des lignes horizontales de style lignes de cahier pour chaque heure */
+.hour-cell::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px; /* Aumente a margem inferior para criar mais espaço entre as linhas */
+    background-color: #ccc;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}

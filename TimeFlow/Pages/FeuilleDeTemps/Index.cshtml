@@ -1,0 +1,232 @@
+﻿@page "{id?}"
+@using System.Globalization
+@using TimeFlow.utils
+@model TimeFlow.Pages.FeuilleDeTemps.IndexModel
+@{
+    ViewData["Title"] = "Feuille de temps";
+}
+
+
+<link rel="stylesheet" type="text/css" href="/css/styles.css">
+
+<style>
+    .time-cell {
+        border-bottom: 1px dashed #7c7c7C;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 100%;
+        min-width: 100px;
+        padding: 10px;
+    }
+
+        .time-cell .minutes-cell {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin-left: 5px;
+            height: 100%;
+            float: right;
+            font-size: 08px;
+        }
+
+    /* Style du sélecteur de semaine */
+    #weekInput {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-right: 10px;
+    }
+</style>
+
+<div class="feuille-de-temps">
+    <div class="header">
+        <div class="employee-info">
+            <p>Nom de l'employé connecté : @User.Identity.Name</p>
+            <p>Heures restantes à saisir : @(Model.HeuresRestantes.Days * 24 + Model.HeuresRestantes.Hours)h @Model.HeuresRestantes.Minutes min</p>
+        </div>
+        <form method="post" id="nav-form">
+            <div class="navigation">
+                <a asp-page="./Index" asp-page-handler="PreviousWeek" asp-route-monday="@Model.Monday.AddDays(-7).ToString()" class="arrow-button">◄</a>
+                <button type="button" class="date-range">@Model.Monday.ToString("MMMM dd, yyyy") - @Model.Monday.AddDays(6).ToString("MMMM dd, yyyy")</button>
+                <a asp-page="./Index" asp-page-handler="NextWeek" asp-route-monday="@Model.Monday.AddDays(7).ToString()" class="arrow-button">►</a>
+                <a asp-page="./Index" asp-route-monday="@Model.Monday.AddDays(-7).ToString()" class="arrow-button">◄</a>
+                <input type="week" asp-for="WeekString" id="weekInput" accept-language="fr" />
+                <a asp-page="./Index" asp-route-monday="@Model.Monday.AddDays(7).ToString()" class="arrow-button">►</a>
+                @if (!Model.Ft.EstSoumis)
+                {
+                    <button type="submit" asp-page="./Index" asp-route-id="@Model.Ft.Id" asp-page-handler="Soumettre" class="action-button">Soumettre</button>
+                }
+                else
+                {
+                    <button type="button" disabled class="action-button">Soumis</button>
+                }
+                @*                 <a asp-page="./AddTask" asp-route-id="@Model.Ft.Id" class="action-button">+  Ajouter tâche</a>
+                *@
+                @*                 <button type="button" class="view-mode" onclick="switchViewMode('full-week')">Semaine complète</button>
+                *@                <button type="button" class="report-button" onclick="showReports()">Rapport</button>
+            </div>
+        </form>
+
+    </div>
+
+    <table class="calendar-table">
+        <tr>
+            <th class="time-header"></th>
+            @for (int day = 1; day <= 7; day++)
+            {
+                int totalerows = 18 * 4 + 1;
+
+                <th class="blank-cell" rowspan="1"></th>
+                <th class="day-cell">
+                    @{
+                        var selectedDay = Model.Ft.FeuilleJours.First(f => (int)f.Date.DayOfWeek == day % 7);
+                    }
+                    @selectedDay.Date.ToString("dddd", new CultureInfo("fr-FR"))
+
+                    <div class="ajouter-table">
+                        <a asp-page="./AddTask" asp-route-id="@Model.Ft?.Id" asp-route-day="@selectedDay.Id">
+                            +
+                        </a>
+
+                    </div>
+                </th>
+            }
+        </tr>
+        @for (int hour = 6; hour < 24; hour++)
+        {
+            for (int quarter = 0; quarter < 4; quarter++)
+            {
+                <tr class="timeSheetRow">
+                    @if (quarter == 0)
+                    {
+                        <td rowspan="4" style="max-height:50px; padding: 0;">
+                            <div class="time-cell">
+                                <div>
+                                    @hour h
+                                </div>
+                                <div class="minutes-cell">
+                                    <div>00min -</div>
+                                    <div>15min -</div>
+                                    <div>30min -</div>
+                                    <div>45min -</div>
+                                </div>
+                            </div>
+                        </td>
+                    }
+                    @for (int day = 1; day <= 7; day++)
+                    {
+                        var decoration = Model.Decoration[day, hour];
+                        <td class="blank-cell popup graded @(quarter == 3 ? "start-hours" : "")">
+                            <div class="popup-right">
+                                <div style="font-size:smaller; width: 70px; text-align: center">
+                                    @hour h @(quarter * 15)min
+                                </div>
+                            </div>
+                        </td>
+
+                        @if (decoration == null)
+                        {
+                            <td rowspan="1" class="day-cell "></td>
+                        }
+                        else
+                        {
+                            if (decoration.StartHourIndex == hour)
+                            {
+                                var tache = decoration.Tache;
+                                if (quarter < decoration.StartQuarterIndex)
+                                {
+                                    <td class="day-cell "></td>
+                                }
+                                else if (decoration.StartQuarterIndex == quarter)
+                                {
+                                    <td rowspan="@decoration.Span" class="day-cell filled popup">
+                                        @if(decoration.Span > 2){
+                                            @tache.Titre
+                                        }
+                                        <div class="popuptext" style="min-width: 160px">
+                                            <span><strong>tache : </strong>@tache.Titre</span>
+                                            <span><strong>projet: </strong>@tache.Projet.Titre</span>
+                                            <span><strong>description : </strong><br /> @tache.Description</span>
+                                            <div>
+                                                @if (!Model.Ft.EstConfirme)
+                                                {
+                                                    <a asp-page="./EditTask"
+                                                       asp-route-feuilleJourId="@decoration.FeuilleJourId"
+                                                       asp-route-tacheId="@tache.Id"
+                                                       class="action-button">
+                                                        edit
+                                                    </a>
+
+                                                    <a asp-page="./DeleteTask"
+                                                       asp-route-feuilleJourId="@decoration.FeuilleJourId"
+                                                       asp-route-tacheId="@tache.Id"
+                                                       class="action-button">
+                                                        delete
+                                                    </a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </td>
+                                }
+                            }
+
+                            if (decoration.EndHourIndex == hour)
+                            {
+
+                                if (quarter >= decoration.EndQuarterIndex)
+                                {
+                                    <td class="day-cell "></td>
+                                }
+                            }
+                        }
+                    }
+                </tr>
+            }
+        }
+    </table>
+
+
+
+
+</div>
+
+@functions {
+
+    private void runderPopup(Tache tache)
+    {
+        <span class="popuptext show" id="myPopup">Popup text... @tache.Titre</span>
+    }
+}
+
+@section Scripts
+{
+    <script>
+        function popup() {
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+        }
+
+        function goToPreviousWeek() {
+            var monday = document.getElementById("monday");
+            var date = new Date(monday.value);
+            date.setDate(date.getDate() - 7);
+            monday.value = date.toISOString().split('T')[0];
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var weekInput = document.getElementById('weekInput');
+            var navForm = document.getElementById('nav-form');
+
+            weekInput.addEventListener('change', function (e) {
+
+                var selectedWeek = weekInput.value;
+                navForm.action = "/FeuilleDeTemps/Index?handler=WeekChange";
+                navForm.submit();
+            });
+        });
+    </script>
+} 

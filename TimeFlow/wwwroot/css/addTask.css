@@ -1,0 +1,74 @@
+﻿/* Adicione este bloco de CSS ao seu arquivo createProject.css */
+
+body {
+    margin: 0;
+/*    font-family: Arial, Helvetica, sans-serif;
+*/    
+    background-color: #f2f2f2;
+    color: #333;
+    height: 100vh;
+}
+
+.containerNT {
+    background-color: whitesmoke;
+    padding: 30px;
+    border: 1px solid #ddd;
+    max-width: 600px;
+    width: 100%;
+    margin: auto;
+    margin-top: 20px;
+}
+
+h4 {
+    color: #333;
+    text-align: center;
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+select,
+input[type="time"],
+input[type="submit"],
+input[type="button"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+input[type="submit"],
+input[type="button"] {
+    cursor: pointer;
+    background-color: #258cfb; /* Cor azul nos botões */
+    color: white; /* Texto branco para contrastar */
+}
+
+    input[type="submit"]:hover,
+    input[type="button"]:hover {
+        background-color: #1c6ec3; /* Tom mais escuro ao passar o mouse */
+    }
+
+    input[type="submit"]:focus,
+    input[type="button"]:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(242, 242, 242, 0.5);
+    }
+
+a {
+    text-decoration: none;
+    color: #258cfb;
+    font-weight: bold;
+}
+
+    a:hover {
+        color: #1877d9;
+    }

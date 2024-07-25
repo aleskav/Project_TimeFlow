@@ -1,0 +1,84 @@
+﻿@page
+@model TimeFlow.Pages.Project.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<link rel="stylesheet" href="/css/styles.css">
+
+<link rel="stylesheet" href="/css/indexProject.css">
+
+<div class="feuille-de-temps">
+    <div class="header">
+
+        <div class="navigation">
+
+
+            <div class="search-form">
+                <form action="#" method="get">
+                    <label asp-for="Search.Titre" class="label-white">Titre :</label>
+                    <input asp-for="Search.Titre" />
+
+                    <label for="start_date" class="label-white">De :</label>
+                    <input asp-for="Search.From" type="date" id="start_date">
+
+                    <label for="end_date" class="label-white">À :</label>
+                    <input asp-for="Search.To" type="date" id="end_date">
+
+                    <label for="estActif" class="label-white">Est actif :</label>
+                    <input asp-for="Search.EstActif">
+
+                    <button type="submit" class="action-button">
+                        <i class="fa fa-search"></i>
+                        Filtrer
+                    </button>
+                </form>
+            </div>
+
+            <a asp-page="Create" class="action-button">Créer Projet</a>
+
+        </div>
+    </div>
+
+    <h2>Liste des projets trouvés :</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Projets[0].Titre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Projets[0].DateCreer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Projets[0].EstActif)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Projets)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateCreer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstActif)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Éditer</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Supprimer</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

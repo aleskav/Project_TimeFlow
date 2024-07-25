@@ -1,0 +1,207 @@
+﻿@page
+@model TimeFlow.Pages.Approvement.ReviewModel
+@using System.Globalization
+@using TimeFlow.utils
+@{
+    ViewData["Title"] = "Feuille de temps Revoir";
+}
+
+
+<style>
+    .time-cell {
+        border-bottom: 1px dashed #7c7c7C;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 100%;
+        min-width: 100px;
+    }
+
+    .time-cell .minutes-cell{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        margin-left: 5px;
+        height: 100%;
+        float: right;
+        font-size: 8px;
+    }
+</style>
+
+
+
+<div class="feuille-de-temps">
+    <div class="header">
+        <div>
+            <h4>FeuilleTemps</h4>
+            <hr />
+            <div class="entete">
+                <div class="grp">
+                    <div class="label">Nom</div>
+                    <div class="value">@Model.Ft.Employe.NomFamille @Model.Ft.Employe.Prenom</div>
+                </div>
+
+                <div class="grp">
+                    <div class="label">Semaine</div>
+                    <div class="value">@Model.Ft.Semaine</div>
+                    </div>
+
+                <div class="grp">
+                    <div class="label">Total</div>
+                    <div class="value">@Model.Ft.TotaleHours.Hours h @Model.Ft.TotaleHours.Minutes min</div>
+                 </div>
+            </div>
+        </div>
+        <br />
+        <br />
+
+        <form method="post" id="nav-form">
+            <div class="navigation">
+
+                <input type="week" disabled asp-for="WeekString" id="weekInput" />
+               
+                @if(!Model.Ft.EstConfirme)
+                {
+                    <button type="submit" asp-page="./Review" asp-route-id="@Model.Ft.Id" asp-page-handler="Confirmer" class="action-button">
+                        Confirmer
+                    </button>
+                }
+                else
+                {
+                    <button type = "submit" asp-page = "./Review" asp-route-id = "@Model.Ft.Id" asp-page-handler = "Annuler" class="action-button">
+                        Annuler Confirmation
+                    </button>
+                }
+            </div>
+        </form>
+
+    </div>
+
+    <table>
+        <tr>
+            <th class="time-header"></th>
+            @for (int day = 1; day <= 7; day++)
+            {
+                int totalerows = 18 * 4 + 1;
+
+                <th class="blank-cell" rowspan="1"></th>
+                <th class="day-cell">
+                    @{
+                        var selectedDay = Model.Ft.FeuilleJours.First(f => (int)f.Date.DayOfWeek == day%7);
+                    }
+                    @selectedDay.Date.ToString("dddd", new CultureInfo("fr-FR"))
+                </th>
+            }
+        </tr>
+        @for (int hour = 6; hour < 24; hour++)
+        {
+            for (int quarter = 0; quarter < 4; quarter++)
+            {
+                <tr class="timeSheetRow">
+                    @if (quarter == 0)
+                    {
+                        <td rowspan="4" style="max-height:50px; padding: 0;">
+                            <div class="time-cell">
+                                <div >
+                                    @hour h
+                                </div>
+                                <div class="minutes-cell">
+                                    <div>00min -</div>
+                                    <div>15min -</div>
+                                    <div>30min -</div>
+                                    <div>45min -</div>
+                                </div>
+                            </div>
+                        </td>
+                    }
+                    @for (int day = 1; day <= 7; day++)
+                    {
+                        var decoration = Model.Decoration[day, hour];
+                        <td class="blank-cell popup graded @(quarter == 3 ? "start-hours" : "")">
+                            <div class="popup-right">
+                                <div style="font-size:smaller; width: 70px; text-align: center">
+                                    @hour h @(quarter * 15)min
+                                </div>
+                            </div>
+                        </td>
+
+                        @if (decoration == null)
+                        {
+                            <td rowspan="1" class="day-cell "></td>
+                        }
+                        else
+                        {
+                            if (decoration.StartHourIndex == hour)
+                            {
+                                var tache = decoration.Tache;
+                                if (quarter < decoration.StartQuarterIndex)
+                                {
+                                    <td class="day-cell "></td>
+                                }
+                                else if (decoration.StartQuarterIndex == quarter)
+                                {
+                                    <td rowspan="@decoration.Span" class="day-cell filled popup">
+                                        @tache.Titre
+                                        <div class="popuptext" style="min-width: 160px" >
+                                            <span><strong>tache : </strong>@tache.Titre</span>
+                                            <span><strong>projet: </strong>@tache.Projet.Titre</span>
+                                            <span><strong>description : </strong><br /> @tache.Description</span>
+                                        </div>
+                                    </td>
+                                }
+                            }
+
+                            if (decoration.EndHourIndex == hour)
+                            {
+                                
+                                if (quarter >= decoration.EndQuarterIndex)
+                                {
+                                    <td class="day-cell "></td>
+                                }
+                            }
+                        }
+                    }
+                </tr>
+            }
+        }
+    </table>
+
+</div>
+
+@functions{
+
+    private void runderPopup(Tache tache){
+            <span class="popuptext show" id="myPopup">Popup text... @tache.Titre</span>
+    }
+}
+
+@section Scripts
+    {
+    <script>
+        function popup() {
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+        }
+
+        function goToPreviousWeek() {
+            var monday = document.getElementById("monday");
+            var date = new Date(monday.value);
+            date.setDate(date.getDate() - 7);
+            monday.value = date.toISOString().split('T')[0];
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var weekInput = document.getElementById('weekInput');
+            var navForm = document.getElementById('nav-form');
+
+            weekInput.addEventListener('change', function (e) {
+                
+                var selectedWeek = weekInput.value;
+                navForm.action = "/FeuilleDeTemps/Index?handler=WeekChange";
+                navForm.submit();
+            });
+        });
+    </script>
+} 

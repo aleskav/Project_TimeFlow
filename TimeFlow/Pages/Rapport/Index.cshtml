@@ -1,0 +1,113 @@
+﻿@page
+@model TimeFlow.Pages.Repport.IndexModel
+@{
+    ViewData["Title"] = "Rapport";
+}
+
+    <style>
+        .table tr{
+            border: 0px;
+            border-bottom: 1px solid #f3f3f3;
+        }
+
+        .table .totale {
+            border: 1px dashed #3498db!important;
+            border-radius: 5px;
+        }
+
+        .table .last-row {
+            border-bottom: 1px solid #2C2C2C;
+            margin-bottom: 10px;
+        }
+    </style>
+
+
+    <div class="containerRapport">
+
+        <h1>Rapport</h1>
+
+        <!-- En-tête du rapport -->
+        <form method="get">
+            <div class="entete">
+                <div class="grp">
+                    <label for="employe">Employé:</label>
+                    <select asp-for="Filter.Employe" asp-items="@Model.Employes" id="employe" >
+                        <!-- Ajoutez les options pour les employés enregistrés -->
+                        <option value=""> -- selectionner -- </option>
+                    </select>
+                </div>
+                <div class="grp">
+                    <label for="du">Du:</label>
+                    <input asp-for="Filter.From" type="date" id="du">
+                </div>
+                <div class="grp">
+                    <label for="au">Au:</label>
+                    <input asp-for="Filter.To" type="date" id="au">
+                </div>
+
+                <div class="grp">
+                    <label for="approuve">Approuvé:</label>
+                    <input asp-for="Filter.Approved" type="checkbox" id="approuve">
+                </div>
+
+                <button type="submit" class="search-button">
+                    <i class="fa fa-search"></i>
+                    Filtrer
+                </button>
+            </div>
+        </form>
+
+        <!-- Espace entre l'en-tête et les affichages -->
+        <div class="spacer"></div>
+
+        
+
+        <!-- Tableau des tâches -->
+        <div >
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tâche</th>
+                        <th>Date</th>
+                        <th>Durée</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- Utilisez Razor pour récupérer les données de la base de données et les afficher ici -->
+                    <!-- TODO: Uncomment and replace the following block with actual data retrieval code -->
+                    <!---->
+                    @foreach (var tache in Model.Taches)
+                    {
+                        var feuillesJours  = tache.FeuilleJours
+                            .Where(fj => 
+                                fj.FeuilleTemps.EmployeId == Model.Filter.Employe && fj.FeuilleTemps.EstConfirme == Model.Filter.Approved
+                            )
+                            .ToList();
+                        int rowspan = feuillesJours.Count + 1;
+                        TimeSpan totalHeures = new(0,0,0);
+
+                        @for (int i = 0; i < feuillesJours.Count; i++)
+                        {
+                            var feuille = feuillesJours[i];
+                            totalHeures += feuille.HoursTravaille;
+                            <tr>
+                                @if(i == 0) {
+                                    <td rowspan="@rowspan" class="border-bottom border-secondary">@tache.Titre</td>
+                                }
+                                <td>@feuille.Date.ToString("dd MMMM yyyy")</td>
+                                <td>@feuille.HoursTravaille.ToString(@"hh\:mm")</td>
+                            </tr>
+                        }
+                        <tr class="last-row">
+                            <td>Total</td>
+                            <td class="totale">@totalHeures.ToString(@"hh\:mm")</td>
+                        </tr> 
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- Grand rectangle avec les en-têtes -->
+        <fieldset class="grand-rectangle">
+    </div>
+

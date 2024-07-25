@@ -1,0 +1,61 @@
+﻿@page
+@model TimeFlow.Areas.Identity.Pages.Account.TestPages.JourFeuilleDeTempsModel
+@{
+    ViewData["Jour"] = "Jour Feuille de temps";
+}
+
+<link rel="stylesheet" href="~/css/styles-jour.css" />
+
+
+<div class="feuille-de-temps">
+    <div class="header">
+        <div class="employee-info">
+            <p>Nom de l'employé connecté : @User.Identity.Name</p>
+            <p>Heures restantes à saisir : [Heures restantes]</p>
+        </div>
+        @{
+            // Obtenez la date actuelle
+            DateTime currentDate = DateTime.Now;
+
+            // Calculez la date du lundi de la semaine en cours
+            DateTime monday = currentDate.AddDays(DayOfWeek.Monday - currentDate.DayOfWeek);
+
+            // Calculez la date du dimanche de la semaine en cours (une semaine après le lundi)
+            DateTime sunday = monday.AddDays(6);
+        }
+
+        <!-- Affichage des jours de la semaine -->
+        <div class="navigation">
+            <button class="arrow-button" onclick="goToPreviousWeek()">◄</button>
+            <button class="date-range">@monday.ToString("MMMM dd, yyyy") - @sunday.ToString("MMMM dd, yyyy")</button>
+            <button class="arrow-button" onclick="goToNextWeek()">►</button>
+            <button class="action-button" onclick="addTask()">+</button>
+            <button class="action-button" onclick="deleteTask()">x</button>
+            <button class="view-mode" onclick="switchViewMode('day')">Jour</button>
+            <button class="view-mode" onclick="switchViewMode('week')">Semaine</button>
+            <button class="view-mode" onclick="switchViewMode('full-week')">Semaine complète</button>
+            <button class="report-button" onclick="showReports()">Rapport</button>
+        </div>
+
+
+    </div>
+        <!-- Affichage de la date choisie -->
+        <div class="date-selection">
+            <p>Date sélectionnée : @currentDate.ToString("MMMM dd, yyyy")</p>
+        </div>
+
+        <!-- Affichage des heures -->
+    <!-- Style du conteneur des horaires -->
+    <div class="container">
+    <div class="hour-container">
+        @for (int i = 6; i <= 24; i++)
+        {
+            <div class="hour-cell">@i:00</div>
+        }
+    </div>
+        <div class="appointment-container">
+        </div>
+    </div>
+</div>
+    
+

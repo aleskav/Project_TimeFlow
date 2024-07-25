@@ -1,0 +1,56 @@
+﻿@page
+@model TimeFlow.Pages.Employes.IndexModel
+
+<p>
+    <a href="/Identity/Account/Register">Créer Nouvelle Connexion</a>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].NomFamille)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].Prenom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].DateEmbauche)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].roles)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomFamille)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prenom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateEmbauche)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.roles)
+                </td>
+
+                <td>
+                    <a asp-page="./EditEmploye" asp-route-id="@item.Id">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

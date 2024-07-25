@@ -1,0 +1,40 @@
+﻿@page
+@model TimeFlow.Pages.Project.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<link rel="stylesheet" href="/css/createProject.css">
+
+<div class="containerNT">
+
+    <h1>Confirmer la disactivation ?</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Projet.Titre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Projet.Titre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Projet.DateCreer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Projet.DateCreer)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Projet.Id" />
+        <input type="submit" value="Disactiver" class="btn btn-danger" /> 
+@*         |<a asp-page="./Index">Retour à la liste des projets</a>
+ *@    </form>
+</div>
+</div>
+

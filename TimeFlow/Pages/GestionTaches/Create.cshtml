@@ -1,0 +1,74 @@
+﻿@page
+@model TimeFlow.Pages.GestionTaches.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de Tâches</title>
+    <link rel="stylesheet" href="/css/NouvelleTache.css">
+</head>
+<body>
+    <div class="containerNT">
+
+        <h1>Nouvelle Tâche</h1>
+
+        <!-- Formulaire pour créer une nouvelle tâche -->
+        <form method="post">
+
+            <!-- Sélection du projet -->
+            <div class="form-group">
+                <label for="projet">Projet:</label>
+                <select asp-for="Tache.ProjetId" id="projet" asp-items="ViewBag.Projets"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Tache.Titre" class="control-label"></label>
+                <input asp-for="Tache.Titre" class="form-control" />
+                <span asp-validation-for="Tache.Titre" class="text-danger"></span>
+            </div>
+            <br>
+
+            <!-- Sélection de la date -->
+            @*  <label for="date">Date:</label>
+            <input asp-for="Tache.DateCreer" type="date" id="date" name="date"><br><br> *@
+
+
+            <!-- Champ de saisie pour la description -->
+            <div class="form-group">
+                <label asp-for="Tache.Description" class="control-label"></label>
+                <textarea asp-for="Tache.Description" rows="4"></textarea>
+                <span asp-validation-for="Tache.Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MembresCharges" class="control-label"></label>
+                <select asp-for="MembresCharges" class="form-control" asp-items="ViewBag.Membres"></select>
+                <span asp-validation-for="MembresCharges" class="text-danger"></span>
+            </div>
+
+            <!-- Bouton pour soumettre le formulaire -->
+            <input type="submit" value="Enregistrer">
+
+            <!-- Bouton pour annuler -->
+            <input type="button" value="Annuler">
+        </form>
+    </div>
+    @*     <div>
+    <a asp-page="Index">Retour à la liste des tâches</a>
+    </div> *@
+</body>
+</html>
+
+<!--https://localhost:7175/Identity/Account/TestPages/NouvelleTache-->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
